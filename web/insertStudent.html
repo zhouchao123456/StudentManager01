@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+</head>
+<body>
+学号:<input type="text" id="sid"><br>
+姓名:<input type="text" id="sname"><br>
+性别:<input type="text" id="ssex"><br>
+年龄:<input type="text" id="sage"><br>
+<input type="button" id="btn" value="添加">
+<font color="blue" hidden="hidden" id="yes">添加成功</font>
+<font color="red" hidden="hidden" id="no">添加失败</font>
+</body>
+<script type="text/javascript">
+    $("#btn").click(function () {
+        var yes = $("#yes");
+        var no = $("no");
+        var sid = $("#sid");
+        var sname = $("#sname");
+        var ssex = $("#ssex");
+        var sage = $("#sage");
+        $.post("insertStudentServlet",{"sid":sid.val(),"sname":sname.val(),"ssex":ssex.val(),"sage":sage.val()},function (data) {
+            if(data=="1"){
+                yes.removeAttr("hidden");
+            }else {
+                no.removeAttr("hidden");
+            }
+        },"json")
+    })
+
+</script>
+
+</html>

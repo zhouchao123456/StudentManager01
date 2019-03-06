@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+</head>
+<body>
+    username:<input type="text" id="username"><br>
+    password:<input type="password" id="password"><br>
+    <font color="green" hidden="hidden" id="yes">可以注册</font>
+    <font color="red" hidden="hidden" id="no">不能重复注册</font>
+    <button id="btn">注册</button><br>
+    <a href="/StudentManager/ajaxLogin.html">直接登录</a>
+
+</body>
+<script type="text/javascript">
+    var yes = $("font[id='yes']");
+    var no = $("font[id='no']");
+
+
+    $("#btn").click(function () {
+        var username = $("#username").val();
+        var password = $("#password").val();
+        $.get("ajaxRegisterServlet",{"username":username,"password":password},function (data) {
+            if ("true"==data){
+                window.location.href="ajaxLogin.html";
+            } else if("false"==data) {
+                no.removeAttr("hidden");
+
+
+            }
+        })
+    })
+
+
+</script>
+</html>

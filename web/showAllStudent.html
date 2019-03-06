@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+    <style type="text/css">
+        table,thead,tr,td,th{
+            border: black solid 1px;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+<table>
+    <thead>
+
+    </thead>
+
+    <tbody>
+
+    </tbody>
+
+</table>
+
+</body>
+<script type="text/javascript">
+    function deleteBtn(btn) {
+        btn.click(function () {
+            $.get("deleteStudentServlet",{"sid":btn.attr("id")},function () {
+                btn.parent().parent().remove();
+            })
+        })
+
+    }
+
+    function fullBody(students) {
+        for(var i=0;i<students.length;i++){
+            var tr = $("<tr></tr>");
+            var sid = $("<td>"+students[i].sid+"</td>");
+            var sname = $("<td>"+students[i].sname+"</td>");
+            var sage = $("<td>"+students[i].sage+"</td>");
+            var ssex = $("<td>"+students[i].ssex+"</td>");
+            var operate = $("<td><button name='btn' id='delete-"+students[i].sid+"'>删除</button></td>");
+            tr.append(sid);
+            tr.append(sname);
+            tr.append(sage);
+            tr.append(ssex);
+            tr.append(operate);
+            $("tbody").append(tr);
+
+            deleteBtn($("#delete-"+students[i].sid));
+        }
+    }
+
+    var thead = $("thead");
+    var tbody = $("tbody");
+    $.post("selectAllStudentServlet",function (students) {
+        var tr = $("<tr></tr>");
+        tr.html("<th>sid</th><th>sname</th><th>sage</th><th>ssex</th><th>操作</th>");
+        thead.append(tr);
+
+        fullBody(students);
+    },"json");
+
+
+
+</script>
+
+
+</html>
